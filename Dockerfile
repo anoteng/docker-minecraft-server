@@ -33,7 +33,7 @@ RUN apt-get update
 RUN apt-get install -y google-cloud-sdk
 
 RUN addgroup minecraft \
-  && adduser -Ss /bin/false -G minecraft -h /home/minecraft minecraft \
+  && adduser --shell /bin/false -G minecraft -h /home/minecraft minecraft \
   && mkdir -m 777 /data \
   && chown minecraft:minecraft /data /home/minecraft
 
