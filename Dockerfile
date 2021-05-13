@@ -2,7 +2,7 @@ FROM golang:1.12.5-alpine3.9 as gcsfuse-builder
 
 ENV GOPATH /go
 
-RUN apk --update add git=2.20.1-r0 fuse=2.9.8-r2 fuse-dev=2.9.8-r2 \
+RUN apk --update add git fuse fuse-dev \
     && go get -u github.com/googlecloudplatform/gcsfuse
     
 FROM adoptopenjdk/openjdk11:alpine-jre
