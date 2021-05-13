@@ -1,9 +1,12 @@
-FROM golang:1.12.5-alpine3.9 as gcsfuse-builder
-
+FROM golang:1.10.0-alpine
+RUN apk add --no-cache git
 ENV GOPATH /go
+RUN go get -u github.com/googlecloudplatform/gcsfuse
 
-RUN apk --update add git fuse fuse-dev \
-    && go get -u github.com/googlecloudplatform/gcsfuse
+FROM alpine:3.6
+RUN apk add --no-cache ca-certificates fuse && rm -rf /tmp/*
+COPY --from=0 /go/bin/gcsfuse /usr/local/bin
+WORKDIR /
     
 FROM adoptopenjdk/openjdk11:alpine-jre
 
@@ -26,10 +29,6 @@ RUN apk add --no-cache -U \
   sudo \
   knock \
   ttf-dejavu go
-
-RUN apk add --no-cache ca-certificates fuse
-
-RUN GO111MODULE=auto go get -u github.com/googlecloudplatform/gcsfuse
 
 RUN addgroup -g 1000 minecraft \
   && adduser -Ss /bin/false -u 1000 -G minecraft -h /home/minecraft minecraft \
