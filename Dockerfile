@@ -2,7 +2,7 @@ FROM adoptopenjdk/openjdk11:debian-jre
 
 LABEL org.opencontainers.image.authors="Geoff Bourne <itzgeoff@gmail.com>"
 
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y \
   openssl \
   imagemagick \
   lsof \
