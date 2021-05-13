@@ -62,7 +62,7 @@ RUN easy-add --var os=${TARGETOS} --var arch=${TARGETARCH}${TARGETVARIANT} \
  --from https://github.com/itzg/{{.app}}/releases/download/{{.version}}/{{.app}}_{{.version}}_{{.os}}_{{.arch}}.tar.gz
 
 COPY mcstatus /usr/local/bin
-COPY --from=gcsfuse /go/bin/gcsfuse /usr/local/bin
+COPY --from=gcsfuse /usr/local/bin/gcsfuse /usr/local/bin/
 
 VOLUME ["/data"]
 COPY server.properties /tmp/server.properties
