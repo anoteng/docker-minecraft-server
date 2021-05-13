@@ -1,10 +1,3 @@
-
-FROM golang:1.10.0-alpine AS gcsfuse
-
-RUN apk add --no-cache git fuse
-ENV GOPATH /go
-RUN go get -u github.com/googlecloudplatform/gcsfuse
-
 FROM adoptopenjdk/openjdk11:alpine-jre
 
 LABEL org.opencontainers.image.authors="Geoff Bourne <itzgeoff@gmail.com>"
@@ -29,7 +22,7 @@ RUN apk add --no-cache -U \
 
 RUN apk add --no-cache ca-certificates fuse
 
-COPY --from=gcsfuse /go/bin/gcsfuse /usr/local/bin
+RUN GO111MODULE=auto go get -u github.com/googlecloudplatform/gcsfuse
 
 RUN addgroup -g 1000 minecraft \
   && adduser -Ss /bin/false -u 1000 -G minecraft -h /home/minecraft minecraft \
