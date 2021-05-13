@@ -1,12 +1,4 @@
-FROM golang:1.10.0-alpine
-RUN apk add --no-cache git
-ENV GOPATH /go
-RUN go get -u github.com/googlecloudplatform/gcsfuse
-
-FROM alpine:3.6
-RUN apk add --no-cache ca-certificates fuse && rm -rf /tmp/*
-COPY --from=0 /go/bin/gcsfuse /usr/local/bin
-WORKDIR /
+FROM chiaen/docker-gcsfuse AS gcsfuse
     
 FROM adoptopenjdk/openjdk11:alpine-jre
 
@@ -70,7 +62,7 @@ RUN easy-add --var os=${TARGETOS} --var arch=${TARGETARCH}${TARGETVARIANT} \
  --from https://github.com/itzg/{{.app}}/releases/download/{{.version}}/{{.app}}_{{.version}}_{{.os}}_{{.arch}}.tar.gz
 
 COPY mcstatus /usr/local/bin
-COPY --from=gcsfuse-builder /go/bin/gcsfuse /usr/local/bin
+COPY --from=gcsfuse /go/bin/gcsfuse /usr/local/bin
 
 VOLUME ["/data"]
 COPY server.properties /tmp/server.properties
