@@ -1,14 +1,14 @@
   
 steps:
   # Build the container image
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/minecraft-313614/docker-minecraft-server:$COMMIT_SHA', '.']
+  - name: 'eu.gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'eu.gcr.io/minecraft-313614/docker-minecraft-server:$COMMIT_SHA', '.']
   # Push the container image to Container Registry
   - name: 'eu.gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/minecraft-313614/docker-minecraft-server:$COMMIT_SHA']
+    args: ['push', 'eu.gcr.io/minecraft-313614/docker-minecraft-server:$COMMIT_SHA']
   # Deploy container image to Cloud Run
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  - name: 'eu.gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
-    args: ['run', 'deploy', 'minecraft-server', '--image', 'gcr.io/minecraft-313614/docker-minecraft-server:$COMMIT_SHA', '--region', 'europe-north1', '--platform', 'managed']
+    args: ['run', 'deploy', 'minecraft-server', '--image', 'eu.gcr.io/minecraft-313614/docker-minecraft-server:$COMMIT_SHA', '--region', 'europe-north1', '--platform', 'managed']
 images:
-  - 'gcr.io/minecraft-313614/docker-minecraft-server:$COMMIT_SHA'
+  - 'eu.gcr.io/minecraft-313614/docker-minecraft-server:$COMMIT_SHA'
