@@ -2,13 +2,11 @@ FROM adoptopenjdk/openjdk11:debian-jre
 
 LABEL org.opencontainers.image.authors="Geoff Bourne <itzgeoff@gmail.com>"
 
-RUN apk add --no-cache -U \
+RUN apt-get install -y \
   openssl \
   imagemagick \
   lsof \
-  su-exec \
-  shadow \
-  bash \
+  sudo \
   curl iputils wget \
   git \
   jq \
@@ -16,8 +14,7 @@ RUN apk add --no-cache -U \
   tzdata \
   rsync \
   nano \
-  sudo \
-  knock \
+#  knock \
   ttf-dejavu
 
 # Install gcsfuse.
