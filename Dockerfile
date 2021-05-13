@@ -5,12 +5,6 @@ RUN apk add --no-cache git
 ENV GOPATH /go
 RUN go get -u github.com/googlecloudplatform/gcsfuse
 
-FROM nginx:alpine
-
-RUN apk add --no-cache ca-certificates fuse
-
-COPY --from=gcsfuse /go/bin/gcsfuse /usr/local/bin
-
 FROM adoptopenjdk/openjdk11:alpine-jre
 
 LABEL org.opencontainers.image.authors="Geoff Bourne <itzgeoff@gmail.com>"
@@ -32,6 +26,10 @@ RUN apk add --no-cache -U \
   sudo \
   knock \
   ttf-dejavu
+
+RUN apk add --no-cache ca-certificates fuse
+
+COPY --from=gcsfuse /go/bin/gcsfuse /usr/local/bin
 
 RUN addgroup -g 1000 minecraft \
   && adduser -Ss /bin/false -u 1000 -G minecraft -h /home/minecraft minecraft \
