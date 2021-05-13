@@ -1,7 +1,7 @@
 
 FROM golang:1.10.0-alpine AS gcsfuse
 
-RUN apk add --no-cache git
+RUN apk add --no-cache git fuse
 ENV GOPATH /go
 RUN go get -u github.com/googlecloudplatform/gcsfuse
 
