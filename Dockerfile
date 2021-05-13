@@ -18,7 +18,7 @@ RUN apk add --no-cache -U \
   nano \
   sudo \
   knock \
-  ttf-dejavu
+  ttf-dejavu go
 
 RUN apk add --no-cache ca-certificates fuse
 
