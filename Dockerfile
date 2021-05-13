@@ -1,3 +1,10 @@
+FROM golang:1.12.5-alpine3.9 as gcsfuse-builder
+
+ENV GOPATH /go
+
+RUN apk --update add git=2.20.1-r0 fuse=2.9.8-r2 fuse-dev=2.9.8-r2 \
+    && go get -u github.com/googlecloudplatform/gcsfuse
+    
 FROM adoptopenjdk/openjdk11:alpine-jre
 
 LABEL org.opencontainers.image.authors="Geoff Bourne <itzgeoff@gmail.com>"
@@ -64,6 +71,7 @@ RUN easy-add --var os=${TARGETOS} --var arch=${TARGETARCH}${TARGETVARIANT} \
  --from https://github.com/itzg/{{.app}}/releases/download/{{.version}}/{{.app}}_{{.version}}_{{.os}}_{{.arch}}.tar.gz
 
 COPY mcstatus /usr/local/bin
+COPY --from=gcsfuse-builder /go/bin/gcsfuse /usr/local/bin
 
 VOLUME ["/data"]
 COPY server.properties /tmp/server.properties
