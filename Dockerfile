@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y \
   imagemagick \
   lsof \
   sudo \
-  curl iputils wget \
+  curl wget \
   git \
   jq \
   default-mysql-client \
