@@ -32,8 +32,8 @@ RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyri
 RUN apt-get update
 RUN apt-get install -y google-cloud-sdk
 
-RUN addgroup -g 1000 minecraft \
-  && adduser -Ss /bin/false -u 1000 -G minecraft -h /home/minecraft minecraft \
+RUN addgroup minecraft \
+  && adduser -Ss /bin/false -G minecraft -h /home/minecraft minecraft \
   && mkdir -m 777 /data \
   && chown minecraft:minecraft /data /home/minecraft
 
