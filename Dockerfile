@@ -15,7 +15,8 @@ RUN apt-get update && apt-get install -y \
   rsync \
   nano \
 #  knock \
-  fonts-dejavu-core
+  fonts-dejavu-core \
+  gnupg
 
 # Install gcsfuse.
 RUN echo "deb http://packages.cloud.google.com/apt gcsfuse-bionic main" | tee -a /etc/apt/sources.list
